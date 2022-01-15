@@ -4,6 +4,7 @@ from Aggregates.Item.Item import Item
 from Aggregates.Order.Order import Order
 
 
+
 class Farmer:
     """Farmer represents farmer type users as an entity"""
 
@@ -28,5 +29,6 @@ class Farmer:
             return self.id == o.id
 
         return False
+
 
 

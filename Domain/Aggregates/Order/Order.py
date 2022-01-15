@@ -1,6 +1,8 @@
-from typing import Optional, List
+from typing import Set
 from Utilities.Address import Address
-
+from Aggregates.Item.Item import Item
+from Aggregates.Farmer.Farmer import Farmer
+from Aggregates.Shopper.Shopper import Shopper
 
 class Order:
     """Farmer represents farmer type users as an entity"""
@@ -9,20 +11,16 @@ class Order:
         self,
         id:str,
         name:str,
-        address: Address, 
-        password: str,
-        openOrders: Optional[str],
-        completedOrders: Optional[str],
-        inventory: Optional[str]
+        shopperAddress: Shopper[Address],
+        farmerAddress: Farmer[Address]
         ):
         
         self.id: str = id,
         self.name: str = name,
-        self.address: str = address,
-        self.password: str = password,
-        self.openOrders: list[str] = openOrders,
-        self.completedOrders: list[str] = completedOrders,
-        self.inventory: list[str] = inventory
+        self.shopperAddress: Address = shopperAddress,
+        self.farmerAddress: Address = farmerAddress, 
+        self.items: Set[Item] = []
+  
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Order):
