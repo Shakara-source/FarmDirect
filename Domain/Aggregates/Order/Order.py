@@ -10,13 +10,11 @@ class Order:
     def __init__(
         self,
         id:str,
-        name:str,
         shopperAddress: Shopper[Address],
         farmerAddress: Farmer[Address]
         ):
         
         self.id: str = id,
-        self.name: str = name,
         self.shopperAddress: Address = shopperAddress,
         self.farmerAddress: Address = farmerAddress, 
         self.items: Set[Item] = []
