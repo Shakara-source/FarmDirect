@@ -5,8 +5,7 @@ from Domain.Aggregates.Item.Item import Item
 from typing import Set
 from Domain.Aggregates.Farmer.Farmer import Farmer
 from Domain.Aggregates.Shopper.Shopper import Shopper
-from Infrastructure.Repositories import OrderRepo 
-from Domain.Aggregates.Item.ItemCategories import Category
+from Infrastructure.Repositories import OrderRepo
 from Seedwork.Application.CommandHandlers import CommandResult
 from Seedwork.Application.Decorators import command_handler
 
@@ -17,7 +16,8 @@ class CreateOrderCommand(Command):
     name: str
     shopperAddress: Shopper[Address]
     farmerAddress: Farmer[Address]
-    items: Set[Item]
+    items: list[Item]
+
 
 @command_handler
 def CreateItem(
@@ -30,4 +30,3 @@ def CreateItem(
         return CommandResult.failed(message="Failed to create listing", exception=e)
 
     return CommandResult.ok(result=listing.id)
-
