@@ -6,23 +6,21 @@ class Item:
 
     def __init__(
         self,
-        id:int,
-        name:str,
-        description:str, 
+        id: int,
+        name: str,
+        description: str,
         price: float,
-        category: Category 
-        ):
-        
+        category: Category
+    ):
+
         self.id: str = id,
         self.name: str = name,
         self.description: str = description,
         self.price: float = price,
         self.category: str = category
-        
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Item):
             return self.id == o.id
 
         return False
-
