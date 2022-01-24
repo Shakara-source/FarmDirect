@@ -1,8 +1,6 @@
 from typing import Sequence, Optional
 from Utilities.Address import Address
 from Aggregates.Item.Item import Item
-from Aggregates.Farmer.Farmer import Farmer
-from Aggregates.Shopper.Shopper import Shopper
 
 
 class Order:
@@ -11,8 +9,8 @@ class Order:
     def __init__(
         self,
         id: str,
-        shopperAddress: Shopper[Address],
-        farmerAddress: Farmer[Address],
+        shopperAddress: Address,
+        farmerAddress: Address,
         items: Optional[Sequence[Item]] = []
     ):
 

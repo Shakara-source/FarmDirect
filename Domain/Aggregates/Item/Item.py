@@ -1,4 +1,5 @@
 from ItemCategories import Category
+from ItemStatus import Status
 
 
 class Item:
@@ -10,7 +11,8 @@ class Item:
         name: str,
         description: str,
         price: float,
-        category: Category
+        category: Category,
+        status: Status
     ):
 
         self.id: str = id,
