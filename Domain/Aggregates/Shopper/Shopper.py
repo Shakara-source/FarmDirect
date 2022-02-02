@@ -19,7 +19,8 @@ class Shopper:
             password: str,
             cart: Optional[Cart] = None,
             orders: Optional[Sequence[Order]] = [],
-            starredFarmers: Optional[Sequence[Farmer]] = []):
+            starredFarmers: Optional[Sequence[Farmer]] = []
+    ):
 
         self.id: str = id,
         self.name: str = name,
