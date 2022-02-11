@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from Farmer import Farmer
+from Domain.Aggregates.Farmer import Farmer
 
 
 class FarmerRepository(ABC):
     """A repository interface for Farmer entity."""
 
     @abstractmethod
-    def create(self, farmer: Farmer) -> Optional[Farmer]:
+    def create(self, farmer: Farmer) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -16,7 +16,7 @@ class FarmerRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, farmer: Farmer) -> Optional[Farmer]:
+    def update(self, farmer: Farmer) -> None:
         raise NotImplementedError
 
     @abstractmethod
