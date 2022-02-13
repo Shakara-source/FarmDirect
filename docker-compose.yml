@@ -1,33 +1,44 @@
-services:  
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3-management
-    ports:
-      - 5672:5672
-      - 15672:15672
-  
-  redis:
-    container_name: redis                                                            
-    image: redis
-    ports:
-      - "6379:6379"
+version: "3.5"
+services:
 
-  worker:
-    container_name: worker
+  backend_app:
     build:
-      dockerfile: api/Dockerfile
       context: .
-    command: sh -c "cd api && uvicorn app:app --host 0.0.0.0 --port 8000 & cd ../ & celery -A celery_tasks.app_worker worker -l INFO --pool=solo"
+      dockerfile: Dockerfile
+    container_name: backend_app
+    stop_signal: SIGINT
+    env_file: .env
+    image: app/backend
+    depends_on: 
+      - postgres
+      - celery
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     volumes:
-      - .:/app
+      - ./:/app
+  
+  postgres:
+    container_name: postgres
+    image: postgres:13.3
+    restart: always
+    env_file: .env
+    environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "8000:8000"
+        - ${POSTGRES_PORT}:${POSTGRES_PORT}
 
-  webapp:
-    container_name: webapp
-    build: 
-      dockerfile: webapp/Dockerfile
-      context: .
-    command: sh -c "cd /app && uvicorn app:app --host 0.0.0.0 --port 80 --reload"
+  
+  
+  rabbitmq:
+    image: rabbitmq:3.8
+    container_name: rabbitmq
+    env_file: .env
+    environment:
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+        RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
     ports:
-      - "80:80"
+        - "${RABBITMQ_PORT}:${RABBITMQ_PORT}"
+        - "${RABBITMQ_PORT_2}:${RABBITMQ_PORT_2}"

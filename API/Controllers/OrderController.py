@@ -1,1 +1,0 @@
-from Infrastructure.Services.Celery import add
