@@ -9,7 +9,7 @@ from Application.Models import OrderDTO
 class CreateOrderCommand(BaseModel):
     """A command for creating new user"""
 
-    shopperAddress: Shopper[Address]
-    farmerAddress: Farmer[Address]
+    shopperAddress: Address
+    farmerAddress: Address
     items: list[Item]
 
