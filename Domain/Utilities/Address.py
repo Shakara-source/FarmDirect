@@ -6,7 +6,7 @@ class Address:
 
     """Address represents an address as a value object"""
 
-    name: str
     address: str
     city: str
     zipCode: int
+    state: str

@@ -13,7 +13,6 @@ class Farmer:
         name: str,
         address: Address,
         email: str,
-        phoneNumber: float,
         password: str,
         orders: Optional[Sequence[Order]] = [],
         inventory: Optional[Sequence[Item]] = []
@@ -23,7 +22,6 @@ class Farmer:
         self.name: str = name,
         self.email: str = email,
         self.address: str = address,
-        self.phoneNumber: float = phoneNumber,
         self.password: str = password,
         self.orders: Optional[Sequence[Order]] = orders,
         self.inventory: Optional[Sequence[Order]] = inventory
