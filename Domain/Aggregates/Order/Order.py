@@ -1,22 +1,27 @@
 from typing import Sequence, Optional
-from Utilities.Address import Address
+import OrderStatus
 from Aggregates.Item.Item import Item
+from Aggregates.Farmer import Farmer
+from Aggregates.Shopper import Shopper
 
 
 class Order:
+    
     """Farmer represents farmer type users as an entity"""
 
     def __init__(
         self,
         id: str,
-        shopperAddress: Address,
-        farmerAddress: Address,
+        status: OrderStatus,
+        shopper: Shopper,
+        farmer: Farmer,
         items: Optional[Sequence[Item]] = []
     ):
 
         self.id: str = id,
-        self.shopperAddress: Address = shopperAddress,
-        self.farmerAddress: Address = farmerAddress,
+        self.status: OrderStatus = status,
+        self.shopper: Shopper = shopper,
+        self.farmer: Farmer = farmer,
         self.items: Optional[Sequence[Item]] = items
 
     def __eq__(self, o: object) -> bool:

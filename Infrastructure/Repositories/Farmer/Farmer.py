@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship
+from Associations.address import FarmerAddress
+from Associations.farmerOrders import FarmerOrder
+from Associations.farmerItems import FarmerItem
 
-
-Base = declarative_base()
+from Database import Base
 
 
 class Farmer(Base):
@@ -11,10 +13,9 @@ class Farmer(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
-    # address 
     email = Column(String, index=True, nullable=False)
     password = Column(String, index=True, nullable=False)
-    orders = relationship('Order', back_populates="farmer")
-    inventory = relationship('Item', back_populates="farmer")
+    address = relationship(f"{FarmerAddress}") 
+    orders = relationship(f"{FarmerOrder}", back_populates="farmer")
+    inventory = relationship(f"{FarmerItem}", back_populates="farmer")
     
-  

@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
-
 from Domain.Aggregates.Farmer import Farmer
 
 
@@ -12,7 +10,7 @@ class FarmerRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def findById(self, id: str) -> Optional[Farmer]:
+    def findById(self, id: str) -> Farmer:
         raise NotImplementedError
 
     @abstractmethod

@@ -1,10 +1,14 @@
-from sqlalchemy.ext.mutable import MutableComposite
 from sqlalchemy import Column, Integer, String
+from Database import Base
 
 
-class Address(MutableComposite):
+class Address(Base):
 
-    Column('Address', String, nullable=False),
-    Column('City', String, nullable=False),
-    Column('ZipCode', Integer, nullable=False),
-    Column('State', String, nullable=False)
+    __tablename__ = 'address'
+    
+    id = Column(Integer, primary_key=True)
+    address = Column(String, nullable=False),
+    city = Column(String, nullable=False),
+    zipCode = Column(Integer, nullable=False),
+    state = Column(String, nullable=False)
+

@@ -14,7 +14,7 @@ from .book_query_model import BookReadModel
 
 
 class BookCommandUseCaseUnitOfWork(ABC):
-    """BookCommandUseCaseUnitOfWork defines an interface based on Unit of Work pattern."""
+    """BookCommandUseCaseUnitOfWork defines an interface based on UOW pattern."""
 
     farmer_repository: FarmerRepository
 
