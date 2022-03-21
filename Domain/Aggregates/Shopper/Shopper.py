@@ -1,9 +1,7 @@
 from typing import Sequence, Optional
 from Utilities.Address import Address
-from Aggregates.Item.Item import Item
 from Aggregates.Order.Order import Order
 from Aggregates.Farmer.Farmer import Farmer
-from ShoppingCart import Cart
 
 
 class Shopper:
@@ -15,9 +13,7 @@ class Shopper:
             name: str,
             address: Address,
             email: str,
-            phoneNumber: float,
             password: str,
-            cart: Optional[Cart] = None,
             orders: Optional[Sequence[Order]] = [],
             starredFarmers: Optional[Sequence[Farmer]] = []
     ):
@@ -26,9 +22,7 @@ class Shopper:
         self.name: str = name,
         self.address: str = address,
         self.email: str = email,
-        self.phoneNumber: float = phoneNumber,
         self.password: str = password,
-        self.cart: Optional[Sequence[Item]] = cart,
         self.orders: Optional[Sequence[Order]] = orders,
         self.starredFarmers: Optional[Sequence[Farmer]] = starredFarmers
 

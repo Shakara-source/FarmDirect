@@ -1,10 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from Associations.address import FarmerAddress
-from Associations.farmerOrders import FarmerOrder
-from Associations.farmerItems import FarmerItem
-
 from Database import Base
+from farmerAddress import FarmerAddress
 
 
 class Farmer(Base):
@@ -15,7 +12,9 @@ class Farmer(Base):
     name = Column(String, index=True, nullable=False)
     email = Column(String, index=True, nullable=False)
     password = Column(String, index=True, nullable=False)
-    address = relationship(f"{FarmerAddress}") 
-    orders = relationship(f"{FarmerOrder}", back_populates="farmer")
-    inventory = relationship(f"{FarmerItem}", back_populates="farmer")
-    
+
+    address = relationship(f"{FarmerAddress}")
+
+    def __repr__(self):
+
+        return f"<Farmer {self.email}"

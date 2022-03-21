@@ -10,5 +10,6 @@ class Address(Base):
     address = Column(String, nullable=False),
     city = Column(String, nullable=False),
     zipCode = Column(Integer, nullable=False),
-    state = Column(String, nullable=False)
+    state = Column(String, nullable=False),
+    
 
