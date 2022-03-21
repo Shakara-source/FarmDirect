@@ -1,40 +1,36 @@
-from config import APIRouter
+from fastapi import FastAPI
+from Infrastructure.Repositories import engine, Base
+from routers import (
+    AuthController,
+    FarmerController,
+    ItemController,
+    ShopperController,
+    OrderController
+)
+from fastapi.middleware.cors import CORSMiddleware
 
-from config import sttgs
-from app.api.routers import (
-    dogs_router,
-    users_router,
-    upload_file_router,
-    security_router,
-    tasks_router
+app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
+Base.metadata.create_all(bind=engine)
 
-api_router = APIRouter()
+
+@app.get("/")
+def hello():
+    return "Hello"
 
 
-api_router.include_router(
-    security_router,
-    prefix=sttgs.get('SECURITY_PREFIX', '/security'),
-    tags=['security']
-)
-api_router.include_router(
-    tasks_router,
-    prefix=sttgs.get('CELERY_TASKS_PREFIX', '/tasks'),
-    tags=['celery tasks']
-)
-api_router.include_router(
-    dogs_router,
-    prefix=sttgs.get('DOGS_API_PREFIX', '/dogs'),
-    tags=['dogs']
-)
-api_router.include_router(
-    users_router,
-    prefix=sttgs.get('USERS_API_PREFIX', '/dogs'),
-    tags=['users']
-)
-api_router.include_router(
-    upload_file_router,
-    prefix=sttgs.get('UPLOAD_API_PREFIX', '/upload'),
-    tags=['upload file']
-)
+app.include_router(AuthController.router)
+app.include_router(FarmerController.router)
+app.include_router(ShopperController.router)
+app.include_router(ItemController.router)
+app.include_router(OrderController.router)
