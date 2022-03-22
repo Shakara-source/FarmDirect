@@ -20,10 +20,7 @@ class TokenSchema(DTO):
 class ItemSchema(DTO):
 
     name: str
-    description: str
-    price: float
     category: str
-    status: str
     quantity: int
 
 
@@ -32,3 +29,9 @@ class CreateOrderSchema(DTO):
     token: TokenSchema
     items: List[ItemSchema]
     subtotal: int
+
+
+class OrderNotificationSchema(DTO):
+
+    farmer_email: str
+    items: List[ItemSchema]

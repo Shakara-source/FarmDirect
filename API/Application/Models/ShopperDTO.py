@@ -13,8 +13,6 @@ class ShopperAddressSchema(DTO):
 class FavoriteFarmersSchema(DTO):
 
     id: str
-    name: str
-    imageUrl: str
 
 
 class ShopperBaseSchema(DTO):

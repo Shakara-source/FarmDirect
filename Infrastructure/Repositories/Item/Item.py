@@ -9,10 +9,12 @@ class Item(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     description = Column(String, index=True, nullable=False)
+    imageUrl = Column(String, index=True, nullable=False)
     price = Column(Float, index=True, nullable=False)
     category = Column(String, index=True, nullable=False)
     status = Column(String, index=True, nullable=False)
     farmer_id = Column(Integer, nullable=False)
+    order_id = Column(String)
     
 
 
