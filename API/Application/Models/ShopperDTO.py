@@ -1,7 +1,26 @@
 from py_dto import DTO
+from typing import List
 
 
-class Shopper(DTO):
+class ShopperAddressSchema(DTO):
 
-    username: str
-    phoneNumber: str
+    address: str
+    city: str
+    zipCode: int
+    state: str
+
+
+class FavoriteFarmersSchema(DTO):
+
+    id: str
+    name: str
+    imageUrl: str
+
+
+class ShopperBaseSchema(DTO):
+
+    name: str
+    email: str
+    password: str
+    address: ShopperAddressSchema
+    favoriteFarmers: List[FavoriteFarmersSchema]

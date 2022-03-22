@@ -1,14 +1,34 @@
+from datetime import datetime
 from py_dto import DTO
-from Domain.Utilities.Address import Address
-from Domain.Aggregates.Shopper import Shopper
-from Domain.Aggregates.Farmer import Farmer
-from Domain.Aggregates.Item.Item import Item
-from Domain.Aggregates.Order.OrderStatus import Status
+from typing import List
 
 
-class Order(DTO):
+class CardSchema(DTO):
 
-    shopper: Shopper
-    farmer: Farmer
-    items: list[Item]
-    status: Status
+    cardNumber: int
+    expiration: datetime
+    cvv: int
+
+
+class TokenSchema(DTO):
+
+    id: str
+    email: str
+    card: CardSchema
+
+
+class ItemSchema(DTO):
+
+    name: str
+    description: str
+    price: float
+    category: str
+    status: str
+    quantity: int
+
+
+class CreateOrderSchema(DTO):
+
+    token: TokenSchema
+    items: List[ItemSchema]
+    subtotal: int
