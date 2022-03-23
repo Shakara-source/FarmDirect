@@ -22,3 +22,9 @@ class ShopperBaseSchema(DTO):
     password: str
     address: ShopperAddressSchema
     favoriteFarmers: List[FavoriteFarmersSchema]
+
+
+class ShopperLogin(DTO):
+
+    email: str
+    password: str

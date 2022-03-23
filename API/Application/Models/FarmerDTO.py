@@ -16,3 +16,9 @@ class FarmerBaseSchema(DTO):
     imageUrl: str
     password: str
     address: FarmerAddressSchema
+
+
+class FarmerLogin(DTO):
+
+    email: str
+    password: str
