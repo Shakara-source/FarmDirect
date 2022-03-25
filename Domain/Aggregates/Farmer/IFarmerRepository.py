@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
-
+from typing import List
 from Farmer import Farmer
 
 
@@ -8,17 +7,26 @@ class FarmerRepository(ABC):
     """A repository interface for Farmer entity."""
 
     @abstractmethod
-    def create(self, farmer: Farmer) -> Optional[Farmer]:
-        raise NotImplementedError
+    def findAll(self) -> List[Farmer]:
+
+        pass
 
     @abstractmethod
-    def findById(self, id: str) -> Optional[Farmer]:
-        raise NotImplementedError
+    def findById(self, id: str) -> Farmer:
+
+        pass
 
     @abstractmethod
-    def update(self, farmer: Farmer) -> Optional[Farmer]:
-        raise NotImplementedError
+    def findByEmail(self, email: str) -> Farmer:
+
+        pass
 
     @abstractmethod
-    def deleteById(self, id: str):
-        raise NotImplementedError
+    def update(self, farmer: Farmer) -> None:
+
+        pass
+
+    @abstractmethod
+    def deleteById(self, id: str) -> None:
+
+        pass

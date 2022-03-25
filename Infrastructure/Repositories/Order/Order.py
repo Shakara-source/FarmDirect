@@ -8,5 +8,6 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     status = Column(String, index=True, nullable=False)
+    shopper_id = Column(Integer, index=True, nullable=False)
     total = Column(Float, index=True, nullable=False)
     

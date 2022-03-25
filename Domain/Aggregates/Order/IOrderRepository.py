@@ -1,22 +1,37 @@
 from abc import ABC, abstractmethod
-from Domain.Aggregates.Farmer import Farmer
+from typing import List
+from Order import Order
 
 
-class FarmerRepository(ABC):
-    """A repository interface for Farmer entity."""
-
-    @abstractmethod
-    def create(self, farmer: Farmer) -> None:
-        raise NotImplementedError
+class OrderRepository(ABC):
+    """A repository interface for Order entity."""
 
     @abstractmethod
-    def findById(self, id: str) -> Farmer:
-        raise NotImplementedError
+    def findAll(self) -> List[Order]:
+
+        pass
 
     @abstractmethod
-    def update(self, farmer: Farmer) -> None:
-        raise NotImplementedError
+    def findById(self, id: str) -> Order:
+
+        pass
 
     @abstractmethod
-    def deleteById(self, id: str):
-        raise NotImplementedError
+    def findByShopperId(self, shopperId: str) -> List[Order]:
+
+        pass
+
+    @abstractmethod
+    def findByStatus(self, status: str) -> List[Order]:
+
+        pass
+
+    @abstractmethod
+    def update(self, order: Order) -> None:
+
+        pass
+
+    @abstractmethod
+    def deleteById(self, id: str) -> None:
+
+        pass
