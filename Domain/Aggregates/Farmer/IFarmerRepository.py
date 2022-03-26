@@ -4,6 +4,7 @@ from Farmer import Farmer
 
 
 class FarmerRepository(ABC):
+    
     """A repository interface for Farmer entity."""
 
     @abstractmethod
