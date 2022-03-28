@@ -3,15 +3,15 @@ import OrderStatus
 from Aggregates.Item.Item import Item
 from Aggregates.Farmer import Farmer
 from Aggregates.Shopper import Shopper
+from pydantic import BaseModel
 
 
-class Order:
+class Order(BaseModel):
     
     """Farmer represents farmer type users as an entity"""
 
     def __init__(
         self,
-        id: str,
         status: OrderStatus,
         shopper: Shopper,
         farmer: Farmer,
