@@ -1,28 +1,22 @@
-from typing import Sequence, Optional
-import OrderStatus
-from Aggregates.Item.Item import Item
-from Aggregates.Farmer import Farmer
-from Aggregates.Shopper import Shopper
+from OrderStatus import OrderStatus
 from pydantic import BaseModel
 
 
 class Order(BaseModel):
     
-    """Farmer represents farmer type users as an entity"""
+    """Order represents order type users as an entity"""
 
     def __init__(
         self,
         status: OrderStatus,
-        shopper: Shopper,
-        farmer: Farmer,
-        items: Optional[Sequence[Item]] = []
+        shopper_id: int,
+        total: float,
     ):
 
         self.id: str = id,
         self.status: OrderStatus = status,
-        self.shopper: Shopper = shopper,
-        self.farmer: Farmer = farmer,
-        self.items: Optional[Sequence[Item]] = items
+        self.shopper_id: int = shopper_id,
+        self.total: float = total
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Order):
