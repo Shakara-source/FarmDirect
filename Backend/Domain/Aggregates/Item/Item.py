@@ -4,7 +4,7 @@ from ItemStatus import Status
 
 
 class Item(BaseModel):
-    """Farmer represents farmer type users as an entity"""
+    """Item represents item type users as an entity"""
 
     def __init__(
         self,
@@ -24,11 +24,18 @@ class Item(BaseModel):
         self.price: float = price,
         self.category: str = category
         self.status: str = status,
-        self.farmer_id: int = farmer_id,
-        self.order_id: int = None
+        self.farmer_id: int = farmer_id
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Item):
             return self.id == o.id
 
         return False
+
+    def updateStatus(self, newStatus: Status) -> None:
+
+        self.status = newStatus
+
+    def updateCategory(self, newCategory: Category) -> None:
+
+        self.category = newCategory

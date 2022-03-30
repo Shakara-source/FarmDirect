@@ -14,7 +14,6 @@ class Item(Base):
     category = Column(String, index=True, nullable=False)
     status = Column(String, index=True, nullable=False)
     farmer_id = Column(Integer, nullable=False)
-    order_id = Column(String)
     
 
 
