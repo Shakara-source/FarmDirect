@@ -1,3 +1,4 @@
+import uuid
 from pydantic import BaseModel
 from ItemCategories import Category
 from ItemStatus import Status
@@ -17,7 +18,7 @@ class Item(BaseModel):
         farmer_id: int
     ):
 
-        self.id: str = id,
+        self.id: uuid = '',
         self.name: str = name,
         self.description: str = description,
         self.image_url: str = image_url
@@ -31,11 +32,3 @@ class Item(BaseModel):
             return self.id == o.id
 
         return False
-
-    def updateStatus(self, newStatus: Status) -> None:
-
-        self.status = newStatus
-
-    def updateCategory(self, newCategory: Category) -> None:
-
-        self.category = newCategory

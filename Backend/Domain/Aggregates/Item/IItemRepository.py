@@ -32,7 +32,7 @@ class ItemRepository(ABC):
         pass
 
     @abstractmethod
-    def findMultipleItems(self, itemIds: List[int]) -> List[Item]:
+    def findMultipleItems(self, itemIds: List[str]) -> List[Item]:
 
         pass
 

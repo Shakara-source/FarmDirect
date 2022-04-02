@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Float
 from Database import Base
 
 
-class Item(Base):
+class ItemStore(Base):
 
     __tablename__ = 'item'
 

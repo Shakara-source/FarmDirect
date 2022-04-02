@@ -4,7 +4,7 @@ from Farmer import Farmer
 
 
 class FarmerRepository(ABC):
-    
+
     """A repository interface for Farmer entity."""
 
     @abstractmethod
@@ -13,12 +13,17 @@ class FarmerRepository(ABC):
         pass
 
     @abstractmethod
-    def findById(self, id: str) -> Farmer:
+    def findById(self, farmerId: str) -> Farmer:
 
         pass
 
     @abstractmethod
-    def findByEmail(self, email: str) -> Farmer:
+    def create(self, farmer: Farmer) -> Farmer:
+
+        pass
+
+    @abstractmethod
+    def findEmail(self, farmerId: str) -> str:
 
         pass
 

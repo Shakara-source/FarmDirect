@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from Database import Base
 
 
-class Shopper(Base):
+class ShopperStore(Base):
 
     __tablename__ = 'shopper'
 

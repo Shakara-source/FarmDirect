@@ -1,21 +1,32 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
+from Domain.Aggregates.Farmer import Farmer
 from Database import Base
-from farmerAddress import FarmerAddress
 
 
-class Farmer(Base):
+class FarmerStore(Base):
 
-    __tablename__ = 'farmer'
+    __tablename__ = 'farmerstore'
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     imageUrl = Column(String, index=True, nullable=False)
     email = Column(String, index=True, nullable=False)
     password = Column(String, index=True, nullable=False)
 
-    address = relationship(f"{FarmerAddress}")
+    def to_entity(self) -> Farmer:
 
-    def __repr__(self):
+        return FarmerStore(
+            id=self.id,
+            name=self.name,
+            imageUrl=self.imageUrl,
+            email=self.email
+        )
 
-        return f"<Farmer {self.email}"
+    @staticmethod
+    def from_entity(farmer: Farmer) -> "FarmerStore":
+        return FarmerStore(
+            id=farmer.id,
+            name=farmer.name,
+            imageUrl=farmer.imageUrl,
+            email=farmer.email
+        )

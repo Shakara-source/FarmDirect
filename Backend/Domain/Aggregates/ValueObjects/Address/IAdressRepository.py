@@ -7,21 +7,12 @@ class AddressRepository(ABC):
     """A repository interface for Address entity."""
 
     @abstractmethod
-    def findAll(self) -> List[Address]:
-
-        pass
-
     def findById(self, id: str) -> Address:
 
         pass
 
     @abstractmethod
-    def findByFarmerId(self, farmerId: str) -> List[Address]:
-
-        pass
-
-    @abstractmethod
-    def findByShopperId(self, shopperId: str) -> List[Address]:
+    def findMultipleAddresses(self, itemIds: List[str]) -> List[Address]:
 
         pass
 
