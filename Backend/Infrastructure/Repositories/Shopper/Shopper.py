@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, ARRAY
 from sqlalchemy.dialects.postgresql import UUID
+from Domain.Aggregates.Shopper import Shopper
 from Database import Base
 
 
@@ -14,6 +15,24 @@ class ShopperStore(Base):
     favorite_farmers_ids = Column(ARRAY(Integer), index=True)
     address_ids = Column(ARRAY(Integer), index=True)
 
-    def __repr__(self):
+    def to_entity(self) -> Shopper:
 
-        return f"<Shopper {self.email}"
+        return ShopperStore(
+            id=self.id,
+            name=self.name,
+            imageUrl=self.imageUrl,
+            email=self.email,
+            password=self.password
+        )
+
+    @staticmethod
+    def from_entity(shopper: Shopper) -> "ShopperStore":
+        return ShopperStore(
+            id=shopper.id,
+            name=shopper.name,
+            imageUrl=shopper.imageUrl,
+            email=shopper.email
+        )
+
+
+    

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer, ARRAY
 from Domain.Aggregates.Farmer import Farmer
 from Database import Base
 
@@ -12,6 +12,7 @@ class FarmerStore(Base):
     imageUrl = Column(String, index=True, nullable=False)
     email = Column(String, index=True, nullable=False)
     password = Column(String, index=True, nullable=False)
+    address_ids = Column(ARRAY(Integer), index=True)
 
     def to_entity(self) -> Farmer:
 
@@ -19,7 +20,8 @@ class FarmerStore(Base):
             id=self.id,
             name=self.name,
             imageUrl=self.imageUrl,
-            email=self.email
+            email=self.email,
+            password=self.password
         )
 
     @staticmethod
