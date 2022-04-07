@@ -1,0 +1,2 @@
+from IShopperRepository import ShopperRepository
+from Shopper import Shopper

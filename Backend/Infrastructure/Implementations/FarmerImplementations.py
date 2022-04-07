@@ -3,7 +3,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from sqlalchemy.orm.session import Session
 from Domain.Aggregates.Farmer import Farmer, FarmerRepository
-from Repositories.Farmer.Farmer import FarmerStore
+from Repositories.Farmer import FarmerStore
 
 
 class FarmerRepoImpl(FarmerRepository):
@@ -19,7 +19,7 @@ class FarmerRepoImpl(FarmerRepository):
                 self.session.query(FarmerStore).limit(number).all()
             )
         except NoResultFound:
-            
+
             raise
 
         if len(farmers) == 0:

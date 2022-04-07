@@ -1,4 +1,3 @@
-from celery import Task
 from Worker import app 
 import time
 
