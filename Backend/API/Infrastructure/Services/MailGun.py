@@ -5,7 +5,7 @@ Domain = "https://api.mailgun.net/v3/sandbox70466e0d8d3748df803876b154787cfa.mai
 FarmDirect_Mail = "no-reply@farmdirect.com"
 
 
-def send_email(template, subject, email):
+def send_email(template, subject, email, text):
     return requests.post(
         Domain,
         auth=("api", Api_Key),
@@ -13,5 +13,5 @@ def send_email(template, subject, email):
               "to": email,
                "subject": subject,
                "template": template
-               "text": "{}"})
+               "text": text})
     )

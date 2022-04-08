@@ -1,62 +1,46 @@
-from Worker import app 
-import time
-
-class AuthenticatePayment(app.Task):
-
-    def __init__(self,cardNumber):
-        self.number = 
-
-    def status(self):
-        if 
-        time.sleep(15)
-        return True
+from Worker import app
+from datetime import datetime
+from Infrastructure.Services.MailGun import send_email
 
 
+class Payments(app.Task):
 
-class NewOrder(app.Task):
+    # Mocks a payment verification service such as stripe
 
-    def __init__(self,orderId,farmerId,shopperId):
-        self.orderId = orderId
-        self.shopperId = shopperId
-        self.farmerId = farmerId 
+    def verify(cardNumber, expiration, cvv):
 
-    def postageLabel(self):
+        try:
 
-        return label
-    
-    def emailFarmer(self):
+            today = datetime.now()
+            if len(cardNumber == 16) and len(3 <= cvv <= 4) and expiration > today:
 
-        subject = "Farm Direct Order number {}".format(self.orderId)
-        message = "Hello {}, Your shipment ".format(self.)
+                return True
 
-    def emailShopper(self):
+        except CardReject:
 
-        subject = "Farm Direct Order number {}".format(self.orderId)
-        message = "Hello {}, A customer ordered the following items:{}".format()
-
-class DeliverOrder(app.Task):
-
-    def __init__(self,orderId, shopperId):
-        self.orderId = orderId,
-        self.shopperId = shopperId
-
-    def emailShopper(self):
-
-        subject = "Farm Direct Order number {}".format(self.orderId)
-        message = "Hello {}, A customer ordered the following items:{}".format()
-    
-    def commitDelivery(self):
-
-        time.sleep(3600)
+            raise
 
 
-@app.task
-def newOrder(payload):
+class Order(app.Task):
 
-    try:
-        twitter = Twitter(oauth)
-        twitter.update_status(tweet)
-    except (Twitter.FailWhaleError, Twitter.LoginError) as exc:
-        
-        raise self.retry(exc=exc)
+    def shopperReceipt(email, items, orderId):
 
+        subject = "Your FarmDirect order {}".format(orderId)
+        text = "Hello, Thank you for your order! {}".format(
+            items)
+        send_email('orderReceipt', subject, email, text)
+
+    def notifyFarmer(email, items, shopper, address):
+
+        subject = "New Orders from {}".format(shopper)
+        text = "Hello, Please send the following: {}".format(
+            items) + "to the following address {}".format(address)
+        send_email('farmerReceipt', subject, email, text)
+
+    def deliver():
+
+        pass
+
+    def notifyShopper():
+
+        pass
