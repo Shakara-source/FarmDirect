@@ -12,7 +12,8 @@ class Payments(app.Task):
         try:
 
             today = datetime.now()
-            if len(cardNumber == 16) and len(3 <= cvv <= 4) and expiration > today:
+            if len(cardNumber == 16) and len(3 <=
+                                             cvv <= 4) and expiration > today:
 
                 return True
 
