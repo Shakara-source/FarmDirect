@@ -30,7 +30,7 @@ class Order(BaseModel):
 
         totalCost = 0
         for item in itemArray:
-            totalCost += item.price
+            totalCost += item['price']
 
         self.total = totalCost
 
@@ -41,3 +41,20 @@ class Order(BaseModel):
     def updateStatus(self, newStatus: OrderStatus) -> None:
 
         self.status = newStatus
+
+    def groupByFarmer(self, itemArray: List) -> List:
+
+        response = {}
+        arr_keys = response.keys()
+
+        for item in itemArray:
+
+            if item['farmer_id'] not in arr_keys:
+
+                response['farmer_id'] = [item]
+
+            else:
+
+                response['farmer_id'].append(item)
+        
+        return response

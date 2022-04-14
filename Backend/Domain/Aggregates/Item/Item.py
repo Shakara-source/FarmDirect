@@ -31,4 +31,4 @@ class Item(BaseModel):
         if isinstance(o, Item):
             return self.id == o.id
 
-        return False
+        return False    

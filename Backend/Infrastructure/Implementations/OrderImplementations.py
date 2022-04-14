@@ -1,6 +1,5 @@
 from typing import List
 from sqlalchemy.orm.exc import NoResultFound
-
 from sqlalchemy.orm.session import Session
 from Domain.Aggregates.Order import Order, OrderRepository, Status
 from Repositories.Order import OrderStore
@@ -50,12 +49,18 @@ class OrderRepoImpl(OrderRepository):
 
             raise
 
-    def findByShopperId(self, shopperId: str) -> Order:
-        pass
+    def findByShopperId(self, shopperId: str, status: Status) -> List[Order]:
 
-    def findByStatus(self, status: Status) -> List[Order]:
+        try:
 
-        pass
+            shopperOrders = self.session.query(
+                OrderStore).filter_by(id=shopperId, status=status).all()
+
+        except NoResultFound:
+
+            raise
+
+        return list(map(lambda order: order.to_entity(), shopperOrders))
 
     def deleteById(self, id: str):
 
