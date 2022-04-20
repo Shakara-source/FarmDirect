@@ -23,11 +23,6 @@ class FarmerRepository(ABC):
         pass
 
     @abstractmethod
-    def findEmail(self, farmerId: str) -> str:
-
-        pass
-
-    @abstractmethod
     def update(self, farmer: Farmer) -> None:
 
         pass

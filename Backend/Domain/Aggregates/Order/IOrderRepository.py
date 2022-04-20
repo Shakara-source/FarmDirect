@@ -16,7 +16,7 @@ class OrderRepository(ABC):
     def findById(self, id: str) -> Order:
 
         pass
-
+    
     @abstractmethod
     def findByShopperId(self, shopperId: str, status: Status) -> List[Order]:
 

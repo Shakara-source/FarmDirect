@@ -1,26 +1,41 @@
-from fastapi import APIRouter
-from seedwork.infrastructure.request_context import request_context
+from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 
-from modules.catalog.module import CatalogModule
-from modules.catalog.application.command.create_listing_draft import (
-    CreateListingDraftCommand,
-)
-from modules.catalog.application.query.get_all_listings import GetAllListings
-from modules.catalog.application.query.get_listing_details import GetListingDetails
-from config.container import Container, inject
-from api.models import ListingReadModel, ListingWriteModel, ListingIndexModel
-from api.shared import dependency
+from Infrastructure.Repositories.Database import get_db
+from Infrastructure.Config.token import create_access_token
+from Infrastructure.Config.hashing import Hashing
+from Infrastructure.Middleware import AuthFarmer
+from Application.Queries.ItemQueries import ItemQuerySwitchboard
 
-router = APIRouter()
+from Domain.Aggregates.Shopper import Shopper
+from Domain.Aggregates.Farmer import Farmer
 
 
-@router.get("/items", tags=['items'], response_model=ItemIndexModel)
-@router.post("/items", tags=['items'], response_model=ItemReadModel)
-@inject
-async def create_item(
-    request_body: ListingWriteModel,
-    module: CatalogModule = dependency(Container.catalog_module)
+router = APIRouter(tags=["Authentication"])
+
+
+@router.post("/new", dependencies=[Depends(AuthFarmer)])
+def NewItem(
+    request: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
 ):
-    """Creates a new Item"""
 
-    command_result = module.execute_command()
+    pass
+
+
+@router.get("/by/{function}")
+def ItemBy(function: str, request: ItemDTO):
+
+    info = request.data
+    return ItemQuerySwitchboard(function, info)
+
+
+@router.put("/{id}", dependencies=[Depends(AuthFarmer)])
+def EditItem(id: int):
+    pass
+
+
+@router.delete("/{id}", dependencies=[Depends(AuthFarmer)])
+def DeleteItem(id: int):
+    pass

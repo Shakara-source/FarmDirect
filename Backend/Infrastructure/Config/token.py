@@ -4,6 +4,7 @@ import jwt
 from sqlalchemy.orm import Session
 from Repositories.Database import get_db
 from users.usersservice import UserService
+from API.Application.Commands.Farmer import FarmerCommand
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 

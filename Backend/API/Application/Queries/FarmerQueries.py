@@ -12,10 +12,3 @@ class FarmerQueries:
 
         farmer = FarmerRepository.findById(farmerId)
         return farmer
-
-    def findFarmerEmail(farmerId: str) -> str:
-
-        email = FarmerRepoImplementation.findEmail(farmerId)
-        return email
-
-
