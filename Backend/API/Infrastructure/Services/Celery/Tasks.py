@@ -1,6 +1,6 @@
 from Worker import app
 from datetime import datetime
-from Infrastructure.Services.MailGun import send_email
+from Infrastructure.Services.MailGun import emailFactory
 
 
 class Payments(app.Task):
@@ -17,31 +17,33 @@ class Payments(app.Task):
 
                 return True
 
-        except CardReject:
+        except Exception:
 
             raise
 
 
 class Order(app.Task):
 
-    def shopperReceipt(email, items, orderId):
+    def orderInvoice(user, items):
 
-        subject = "Your FarmDirect order {}".format(orderId)
-        text = "Hello, Thank you for your order! {}".format(
-            items)
-        send_email('orderReceipt', subject, email, text)
+        method = 'orderInvoice'
+        template = 'temp'
+        res = emailFactory(method, user, items, template)
 
-    def notifyFarmer(email, items, shopper, address):
+        return res
 
-        subject = "New Orders from {}".format(shopper)
-        text = "Hello, Please send the following: {}".format(
-            items) + "to the following address {}".format(address)
-        send_email('farmerReceipt', subject, email, text)
+    def orderNotification(farmer, user, items):
 
-    def deliver():
+        method = 'orderNotification'
+        template = 'temp'
+        res = emailFactory(method, farmer, user, items, template)
 
-        pass
+        return res
 
-    def notifyShopper():
+    def orderEnroute(user, items):
 
-        pass
+        method = 'orderEnroute'
+        template = 'temp'
+        res = emailFactory(method, user, items, template)
+
+        return res
