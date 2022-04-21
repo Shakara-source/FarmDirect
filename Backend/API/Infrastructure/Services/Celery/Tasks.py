@@ -1,6 +1,6 @@
 from Worker import app
 from datetime import datetime
-from Infrastructure.Services.MailGun import emailFactory, send_email
+from Infrastructure.Services.MailGun import emailFactory
 
 
 class Payments(app.Task):
@@ -29,7 +29,6 @@ class Order(app.Task):
         method = 'orderInvoice'
         template = 'temp'
         res = emailFactory(method, user, items, template)
-        send_email()
 
         return res
 
