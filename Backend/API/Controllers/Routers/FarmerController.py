@@ -6,6 +6,7 @@ from Infrastructure.Repositories.Database import get_db
 from Infrastructure.Config.token import create_access_token
 from Infrastructure.Config.hashing import Hashing
 from Infrastructure.Middleware import AuthFarmer
+from Application.Queries.FarmerQueries import FarmerQueries
 
 from Domain.Aggregates.Shopper import Shopper
 from Domain.Aggregates.Farmer import Farmer
@@ -24,9 +25,9 @@ def NewFarmer(
 
 
 @router.get("/{id}")
-def GetFarmer(id: int):
+def GetFarmer(id: int, db: Session = Depends(get_db)):
 
-    pass
+    return FarmerQueries.findById(id=id, db=db)
 
 
 @router.put("/{id}", dependencies=[Depends(AuthFarmer)])

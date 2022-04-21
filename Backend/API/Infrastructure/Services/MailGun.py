@@ -22,18 +22,18 @@ def emailFactory(emailType, *args):
 
     if emailType == 'orderInvoice':
 
-        Emails.orderInvoice(args)
+        EmailService.orderInvoice(args)
 
     elif emailType == 'orderNotification':
 
-        Emails.orderNotification(args)
+        EmailService.orderNotification(args)
 
     elif emailType == 'orderEnroute':
 
-        Emails.orderEnroute(args)
+        EmailService.orderEnroute(args)
 
 
-class Emails:
+class EmailService:
 
     def orderInvoice(user, items, template):
 

@@ -18,6 +18,11 @@ class FarmerRepository(ABC):
         pass
 
     @abstractmethod
+    def findByEmail(self, email: str) -> Farmer:
+
+        pass
+
+    @abstractmethod
     def create(self, farmer: Farmer) -> Farmer:
 
         pass
