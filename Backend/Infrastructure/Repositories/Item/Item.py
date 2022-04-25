@@ -7,13 +7,13 @@ class ItemStore(Base):
 
     __tablename__ = 'item'
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     description = Column(String, index=True, nullable=False)
     imageUrl = Column(String, index=True, nullable=False)
     price = Column(Float, index=True, nullable=False)
     category = Column(String, index=True, nullable=False)
-    status = Column(String, index=True, nullable=False)
+    quantity = Column(Integer, index=True, nullable=False)
     farmer_id = Column(Integer, nullable=False)
 
     def to_entity(self) -> Item:
@@ -25,7 +25,7 @@ class ItemStore(Base):
             imageUrl=self.imageUrl,
             price=self.price,
             category=self.category,
-            status=self.status,
+            quantity=self.quantity,
             farmer_id=self.farmer_id
         )
 
@@ -38,6 +38,6 @@ class ItemStore(Base):
             imageUrl=item.imageUrl,
             price=item.price,
             category=item.category,
-            status=item.status,
+            quantity=item.quantity,
             farmer_id=item.farmer_id
         )
