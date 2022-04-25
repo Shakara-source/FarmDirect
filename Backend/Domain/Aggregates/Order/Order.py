@@ -1,7 +1,8 @@
 from OrderStatus import OrderStatus
 from typing import List
 from pydantic import BaseModel
-
+from OrderItems import OrderItems
+ 
 
 class Order(BaseModel):
 
@@ -16,8 +17,8 @@ class Order(BaseModel):
 
         self.id: str = id,
         self.status: OrderStatus = status,
-        self.shopper_id: int = shopper_id,
-        self.item_ids: List[int]
+        self.shopper_id: str = shopper_id,
+        self.items: List[OrderItems]
         self.total: float = total
 
     def __eq__(self, o: object) -> bool:
@@ -26,11 +27,11 @@ class Order(BaseModel):
 
         return False
 
-    def calculatePrice(self, itemArray: List) -> None:
+    def calculatePrice(self, items: List) -> None:
 
         totalCost = 0
-        for item in itemArray:
-            totalCost += item['price']
+        for item in items:
+            totalCost += item['price'] * item['quantity']
 
         self.total = totalCost
 
@@ -42,12 +43,12 @@ class Order(BaseModel):
 
         self.status = newStatus
 
-    def groupByFarmer(self, itemArray: List) -> List:
+    def groupByFarmer(self, items: List) -> List:
 
         response = {}
         arr_keys = response.keys()
 
-        for item in itemArray:
+        for item in items:
 
             if item['farmer_id'] not in arr_keys:
 
@@ -58,3 +59,5 @@ class Order(BaseModel):
                 response['farmer_id'].append(item)
         
         return response
+    
+    def addItem(self,item: )
