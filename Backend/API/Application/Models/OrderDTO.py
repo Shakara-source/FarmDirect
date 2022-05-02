@@ -35,3 +35,18 @@ class OrderNotificationSchema(DTO):
 
     farmer_email: str
     items: List[ItemSchema]
+
+
+class OrderItems:
+
+    itemId: str
+    farmerId: str
+    price: float
+    quantity: int
+
+
+class NewOrder:
+
+    shopper_id: str
+    payment_info: CardSchema
+    items: List[OrderItems]

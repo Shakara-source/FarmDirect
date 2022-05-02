@@ -1,19 +1,29 @@
 from Worker import app
 from datetime import datetime
+from Application.Models.OrderDTO import CardSchema, NewOrder
 from Infrastructure.Services.MailGun import emailFactory
 
 
-class Payments(app.Task):
+class PaymentTasks(app.Task):
 
     # Mocks a payment verification service such as stripe
+    def calculatePrice(data: NewOrder):
 
-    def verify(cardNumber, expiration, cvv):
+        items = data.items
+        totalCost = 0
+        for item in items:
+            totalCost += item.price * item.quantity
+
+        return totalCost
+
+    def verifyPayment(data: CardSchema):
 
         try:
 
             today = datetime.now()
-            if len(cardNumber == 16) and len(3 <=
-                                             cvv <= 4) and expiration > today:
+            if len(
+                data.cardNumber == 16
+            ) and len(3 <= data.cvv <= 4) and data.expiration > today:
 
                 return True
 
@@ -22,9 +32,9 @@ class Payments(app.Task):
             raise
 
 
-class Order(app.Task):
+class OrderTasks(app.Task):
 
-    def orderInvoice(user, items):
+    def sendInvoice(user, items):
 
         method = 'orderInvoice'
         template = 'temp'
@@ -32,7 +42,7 @@ class Order(app.Task):
 
         return res
 
-    def orderNotification(farmer, user, items):
+    def sendFarmerNotification(farmer, user, items):
 
         method = 'orderNotification'
         template = 'temp'

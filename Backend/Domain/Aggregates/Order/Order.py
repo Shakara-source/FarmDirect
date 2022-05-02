@@ -1,8 +1,12 @@
+from msilib.schema import Patch
 from OrderStatus import OrderStatus
 from typing import List
+from Aggregates.ValueObjects import Address, PaymentInfo
 from pydantic import BaseModel
 from OrderItems import OrderItems
- 
+from API.Application.Models.OrderDTO import NewOrder
+import shortuuid
+
 
 class Order(BaseModel):
 
@@ -10,16 +14,22 @@ class Order(BaseModel):
 
     def __init__(
         self,
+        id: str,
         status: OrderStatus,
         shopper_id: int,
-        total: float,
+        order_address: Address,
+        payment_info: PaymentInfo,
+        items: List[OrderItems]
+
     ):
 
         self.id: str = id,
         self.status: OrderStatus = status,
         self.shopper_id: str = shopper_id,
-        self.items: List[OrderItems]
-        self.total: float = total
+        self.order_address: Address = order_address,
+        self.payment_info: PaymentInfo = payment_info,
+        self.items: List[OrderItems] = items,
+        self.total: float = 0.0
 
     def __eq__(self, o: object) -> bool:
         if isinstance(o, Order):
@@ -27,13 +37,26 @@ class Order(BaseModel):
 
         return False
 
+    def newOrder(self, commandModel: NewOrder) -> 'Order':
+
+        orderId = shortuuid.uuid()
+        items = list(map(lambda item: OrderItems(
+            orderId=orderId, itemId=item['itemId'],
+            farmerId=item['farmerId'], price=item['price'],
+            quantity=item['quantity']
+        )), commandModel['items'])
+
+        total = self.calculatePrice(items)
+
+        return Order(id=orderId, shopper_id=NewOrder.shopper_id, items=items, total=total)
+
     def calculatePrice(self, items: List) -> None:
 
         totalCost = 0
         for item in items:
             totalCost += item['price'] * item['quantity']
 
-        self.total = totalCost
+        return totalCost
 
     def removeItem(self, itemId: int) -> None:
 
@@ -57,7 +80,7 @@ class Order(BaseModel):
             else:
 
                 response['farmer_id'].append(item)
-        
+
         return response
-    
-    def addItem(self,item: )
+
+    def addItem(self, item: )
