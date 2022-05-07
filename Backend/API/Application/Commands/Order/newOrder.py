@@ -6,6 +6,7 @@ from Models.OrderReadModel import OrderReadModel
 from Infrastructure.Services.Celery.Tasks import PaymentTasks, OrderTasks
 import shortuuid
 
+
 class NewOrderCommandUseCase(ABC):
 
     @abstractmethod
@@ -20,24 +21,13 @@ class NewOrderUseCaseImplementation(NewOrderCommandUseCase):
         self.uow: OrderUnitOfWork = uow
 
     def createNewOrder(self, data: OrderBaseSchema) -> Optional[OrderReadModel]:
-        
+
         try:
 
             PaymentTasks.verify(payment)
-
             Order.newOrder()
-
-
-
-
-            uuid = shortuuid.uuid(),
-            Order = Order(id=uuid, name=data.name, imageUrl=data.imageUrl,
-                            email=data.email, password=password)
-            self.uow.item_repository.create(item)
-            self.uow.commit()
             createdItem = self.uow.farmer_repository.findById(uuid)
-            
-            
+
         except Exception:
 
             self.uow.rollback()

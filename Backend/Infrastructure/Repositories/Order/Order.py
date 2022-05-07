@@ -12,6 +12,7 @@ class OrderItem(Base):
         'order.id', ondelete="RESTRICT"), primary_key=True)
     itemId = Column(String, primary_key=True)
     farmerId = Column(String, primary_key=True)
+    name = Column(String, primary_key=True)
     quantity = Column(Integer, primary_key=True)
     price = Column(Float, primary_key=True)
 
@@ -39,6 +40,7 @@ class OrderStore(Base):
         self.items = list(map(lambda item:
                               OrderItem(
                                   orderId=self.id, itemId=item['itemId'],
+                                  itemName=item['name'],
                                   quantity=item['quantity'],
                                   farmerId=['farmerId'],
                                   price=item['price']), items))

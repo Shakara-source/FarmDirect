@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from py_dto import DTO
 from typing import List
 
@@ -6,38 +6,11 @@ from typing import List
 class CardSchema(DTO):
 
     cardNumber: int
-    expiration: datetime
-    cvv: int
+    expiration: date
+    cvv: str
 
 
-class TokenSchema(DTO):
-
-    id: str
-    email: str
-    card: CardSchema
-
-
-class ItemSchema(DTO):
-
-    name: str
-    category: str
-    quantity: int
-
-
-class CreateOrderSchema(DTO):
-
-    token: TokenSchema
-    items: List[ItemSchema]
-    subtotal: int
-
-
-class OrderNotificationSchema(DTO):
-
-    farmer_email: str
-    items: List[ItemSchema]
-
-
-class OrderItems:
+class OrderItemSchema(DTO):
 
     itemId: str
     farmerId: str
@@ -45,8 +18,16 @@ class OrderItems:
     quantity: int
 
 
-class NewOrder:
+class CreateOrderSchema(DTO):
 
-    shopper_id: str
-    payment_info: CardSchema
-    items: List[OrderItems]
+    token: str
+    payment: CardSchema
+    items: List[OrderItemSchema]
+
+
+class OrderNotificationSchema(DTO):
+
+    farmer_email: str
+    items: List[OrderItemSchema]
+
+
