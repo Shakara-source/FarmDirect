@@ -1,4 +1,3 @@
-from msilib.schema import Patch
 from OrderStatus import OrderStatus
 from typing import List
 from Aggregates.ValueObjects import Address, PaymentInfo
@@ -40,15 +39,16 @@ class Order(BaseModel):
     def newOrder(self, commandModel: NewOrder) -> 'Order':
 
         orderId = shortuuid.uuid()
-        items = list(map(lambda item: OrderItems(
-            orderId=orderId, itemId=item['itemId'],
-            farmerId=item['farmerId'], price=item['price'],
-            quantity=item['quantity']
-        )), commandModel['items'])
+        orderItems = list(map(lambda item: OrderItems(
+            orderId=orderId, itemId=item.itemId,
+            farmerId=item.farmerId, price=item.price,
+            quantity=item.quantity
+        )), commandModel.items)
 
-        total = self.calculatePrice(items)
+        total = self.calculatePrice(orderItems)
 
-        return Order(id=orderId, shopper_id=NewOrder.shopper_id, items=items, total=total)
+        return Order(id=orderId, shopper_id=NewOrder.shopper_id,
+                     items=orderItems, total=total)
 
     def calculatePrice(self, items: List) -> None:
 
@@ -66,7 +66,7 @@ class Order(BaseModel):
 
         self.status = newStatus
 
-    def groupByFarmer(self, items: List) -> List:
+    def notifyFarmer(self, items: List) -> List:
 
         response = {}
         arr_keys = response.keys()
@@ -82,5 +82,3 @@ class Order(BaseModel):
                 response['farmer_id'].append(item)
 
         return response
-
-    def addItem(self, item: )
