@@ -3,7 +3,7 @@ from typing import List
 from Aggregates.ValueObjects import Address, PaymentInfo
 from pydantic import BaseModel
 from OrderItems import OrderItems
-from API.Application.Models.OrderDTO import NewOrder
+from API.Application.Models.OrderDTO import NewOrderSchema
 import shortuuid
 
 
@@ -36,19 +36,17 @@ class Order(BaseModel):
 
         return False
 
-    def newOrder(self, commandModel: NewOrder) -> 'Order':
+    def newOrder(self, NewOrder: NewOrderSchema) -> 'Order':
 
         orderId = shortuuid.uuid()
         orderItems = list(map(lambda item: OrderItems(
             orderId=orderId, itemId=item.itemId,
             farmerId=item.farmerId, price=item.price,
             quantity=item.quantity
-        )), commandModel.items)
-
-        total = self.calculatePrice(orderItems)
+        )), NewOrder.items)
 
         return Order(id=orderId, shopper_id=NewOrder.shopper_id,
-                     items=orderItems, total=total)
+                     items=orderItems, total=NewOrder.total)
 
     def calculatePrice(self, items: List) -> None:
 
@@ -66,7 +64,7 @@ class Order(BaseModel):
 
         self.status = newStatus
 
-    def notifyFarmer(self, items: List) -> List:
+    def groupOrderByFarmer(self, items: List[NewOrderSchema.items]) -> List:
 
         response = {}
         arr_keys = response.keys()

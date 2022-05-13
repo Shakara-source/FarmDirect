@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from Domain.Aggregates.Order import Order, OrderStatus
-from Domain.Aggregates.Item import Item
+from Domain.Aggregates.Order import Order, OrderStatus, OrderItems
 
 
 class OrderReadModel(BaseModel):
@@ -11,7 +10,7 @@ class OrderReadModel(BaseModel):
     id: str = '',
     status: OrderStatus = '',
     shopper_id: str = '',
-    items: List[Item] = [],
+    items: List[OrderItems] = [],
     total: float = 0.0
 
     class Config:

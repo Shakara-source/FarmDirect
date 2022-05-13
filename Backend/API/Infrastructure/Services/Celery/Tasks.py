@@ -1,59 +1,21 @@
 from Worker import app
-from datetime import datetime
-from Application.Models.OrderDTO import CardSchema, NewOrder
+from Application.Models.OrderDTO import CardSchema
+from celery.utils.log import get_task_logger
 from Infrastructure.Services.MailGun import emailFactory
+from Infrastructure.Services.Card import CardServices
+
+celery_log = get_task_logger(__name__)
 
 
-class PaymentTasks(app.Task):
-
-    # Mocks a payment verification service such as stripe
-    def calculatePrice(data: NewOrder):
-
-        items = data.items
-        totalCost = 0
-        for item in items:
-            totalCost += item.price * item.quantity
-
-        return totalCost
-
-    def verifyPayment(data: CardSchema):
-
-        try:
-
-            today = datetime.now()
-            if len(
-                data.cardNumber == 16
-            ) and len(3 <= data.cvv <= 4) and data.expiration > today:
-
-                return True
-
-        except Exception:
-
-            raise
+@app.task(name='payment.verify')
+def verifyCard(data: CardSchema):
+    CardServices.verify(data)
+    celery_log.info("Celery task completed!")
+    return 'Status'
 
 
-class OrderTasks(app.Task):
-
-    def sendInvoice(user, items):
-
-        method = 'orderInvoice'
-        template = 'temp'
-        res = emailFactory(method, user, items, template)
-
-        return res
-
-    def sendFarmerNotification(farmer, user, items):
-
-        method = 'orderNotification'
-        template = 'temp'
-        res = emailFactory(method, farmer, user, items, template)
-
-        return res
-
-    def orderEnroute(user, items):
-
-        method = 'orderEnroute'
-        template = 'temp'
-        res = emailFactory(method, user, items, template)
-
-        return res
+@app.task(name='mailers.send')
+def sendEmail(type: str, data):
+    emailFactory(type, data)
+    celery_log.info("Celery task completed!")
+    return 'Status'
