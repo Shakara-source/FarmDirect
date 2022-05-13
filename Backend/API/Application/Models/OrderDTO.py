@@ -18,16 +18,27 @@ class OrderItemSchema(DTO):
     quantity: int
 
 
-class CreateOrderSchema(DTO):
+class NewOrderSchema(DTO):
 
     token: str
     payment: CardSchema
+    shopperAddress: str
     items: List[OrderItemSchema]
 
 
-class OrderNotificationSchema(DTO):
+class OrderInvoiceSchema(DTO):
 
-    farmer_email: str
+    template: str
+    shopperEmail: str
+    shopperName: str
     items: List[OrderItemSchema]
+    price: float
 
 
+class FarmerOrderNotificationSchema(DTO):
+
+    template: str
+    farmerEmail: str
+    farmerName: str
+    orderAddress: str
+    items: List[OrderItemSchema]
