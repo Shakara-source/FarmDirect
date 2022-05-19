@@ -35,7 +35,7 @@ class OrderInvoiceSchema(DTO):
     price: float
 
 
-class FarmerOrderNotificationSchema(DTO):
+class FarmerInvoiceSchema(DTO):
 
     template: str
     farmerEmail: str

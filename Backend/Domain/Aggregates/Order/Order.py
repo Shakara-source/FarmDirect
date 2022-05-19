@@ -9,7 +9,7 @@ import shortuuid
 
 class Order(BaseModel):
 
-    """Order represents order type users as an entity"""
+    """Order represents order type as an entity"""
 
     def __init__(
         self,
@@ -45,8 +45,10 @@ class Order(BaseModel):
             quantity=item.quantity
         )), NewOrder.items)
 
+        total = self.calculatePrice(orderItems)
+
         return Order(id=orderId, shopper_id=NewOrder.shopper_id,
-                     items=orderItems, total=NewOrder.total)
+                     items=orderItems, total=total)
 
     def calculatePrice(self, items: List) -> None:
 

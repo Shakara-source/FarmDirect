@@ -4,8 +4,8 @@ from Infrastructure.UOW.OrderUOW import OrderUnitOfWork
 from Domain.Aggregates.Order import Order
 from Models.OrderDTO import NewOrderSchema
 from Models.OrderReadModel import OrderReadModel
-from Infrastructure.Services.Celery.Tasks import PaymentTasks, OrderTasks
-import shortuuid
+from Infrastructure.Services.Celery.Worker import app
+from celery.result import AsyncResult
 
 
 class NewOrderCommandUseCase(ABC):
@@ -21,19 +21,18 @@ class NewOrderUseCaseImplementation(NewOrderCommandUseCase):
     def __init__(self, uow: OrderUnitOfWork):
         self.uow: OrderUnitOfWork = uow
 
-    def createNewOrder(self, data: NewOrderSchema) -> Optional[OrderReadModel]:
+    def createNewOrder(self, cardId: str, data: NewOrderSchema) -> str:
 
         try:
-
-            await PaymentTasks.verifyPayment(data.payment)
-            Order.newOrder(data)
-            createdOrder = self.uow.farmer_repository.findById(uuid)
-            OrderTasks.sendFarmerNotification()
-            OrderTasks.sendInvoice()
+            cardVerification = AsyncResult(cardId, app=app)
+            result = cardVerification.ready()
+            if result == 'SUCCESS':
+                
+                order = Order.newOrder(data)
 
         except Exception:
 
             self.uow.rollback()
             raise
 
-        return OrderReadModel.from_entity(cast(Order, createdOrder))
+        return order.Id
